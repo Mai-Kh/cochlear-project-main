@@ -1,0 +1,30 @@
+simExample = similarity()
+
+simExample.cosine_similarity('cat', 'lizard', embeddings_speech2vec)
+Out[38]: 0.5371468
+
+len(simExample.pairwise_similarity("data-cochlear.txt", embeddings_word2vec))
+Out[39]: 1307
+
+c = clusters()
+
+w2vClusters, w2vData = c.compute_clusters("data-cochlear.txt", embeddings_word2vec)
+C:\ProgramData\Anaconda3\lib\site-packages\sklearn\cluster\_kmeans.py:1036: UserWarning: KMeans is known to have a memory leak on Windows with MKL, when there are less chunks than available threads. You can avoid it by setting the environment variable OMP_NUM_THREADS=1.
+  warnings.warn(
+
+enter number of clusters 	3
+
+s2vClusters, s2vData = c.compute_clusters("data-cochlear.txt", embeddings_speech2vec)
+C:\ProgramData\Anaconda3\lib\site-packages\sklearn\cluster\_kmeans.py:1036: UserWarning: KMeans is known to have a memory leak on Windows with MKL, when there are less chunks than available threads. You can avoid it by setting the environment variable OMP_NUM_THREADS=1.
+  warnings.warn(
+
+enter number of clusters 	3
+
+clusterData = pd.concat((w2vClusters, s2vClusters), axis=0)
+
+pwData = pd.concat((w2vData, s2vData), axis=0)
+
+sums = c.visualize_clusters('SOQ-329', clusterData, pwData)
+
+sums.plot.bar(x='modName', y = ['clusterMean', 'switchMean'])
+Out[46]: <AxesSubplot:xlabel='modName'>
